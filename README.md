@@ -3,15 +3,15 @@ Repository for Intro To Software Engineering Lab, Group 3
 
 A locally hosted E-Commerce Website
 
-Group Members
-Samuel Karahalis
-Ashtanyrein Duncan 
-CJ Parker
-Seth Sorgen
-Sam Mclnnis
+# __Group Members:__
+Samuel Karahalis  \n
+Ashtanyrein Duncan  \n
+CJ Parker \n
+Seth Sorgen \n
+Sam Mclnnis \n
 
 
-Tech Stack 
-Python - Backend 
-HTMl, CSS - Frontend
-MySQL - Database 
+Tech Stack \n
+Python - Backend \n
+HTMl, CSS - Frontend \n
+MySQL - Database \n
