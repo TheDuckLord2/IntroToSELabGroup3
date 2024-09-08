@@ -4,7 +4,7 @@
 This repository contains the implementation of a locally hosted e-commerce platform. 
 
 # **Objective:**
-The objective of this project is to create an E-Commerce Website. This website functions as an online shopping space in which users buy items.
+The objective of this project is to create an E-Commerce Website. This website functions as an online shopping space in which users buy items in an effective manner. Users should have no issue finding, buying, and receiving the correct items they have ordered in a timely manner. The website should be quick and secure, wile also allowing users to easily find any products they want.
 
 # **Features:**
 User Management - Management of User information including payment details, login info, shipping details, and any other relevant info.
