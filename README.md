@@ -1,7 +1,7 @@
 # CSE 4214 / 6214 – Introduction to Software Engineering Group 3 
 
 # **Description:**  
-This repository contains the implementation of a locally hosted e-commerce platform. 
+This repository contains the implementation of a locally hosted E-commerce platform. 
 
 # **Objective:**
 The objective of this project is to create an E-Commerce Website. This website functions as an online shopping space in which users buy items in an effective manner. Users should have no issue finding, buying, and receiving the correct items they have ordered in a timely manner. The website should be quick and secure, wile also allowing users to easily find any products they want.
