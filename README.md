@@ -20,7 +20,7 @@ Admin Management - Manage the list of authorized admins and allow them to perfor
 # **Languages and Technologies:**
 **Backend:** Python with Django framework  
 **Frontend:** HTML, CSS  
-**Database:** MySQl   
+**Database:** MySQL   
 
 # **Team:**  
 **Samuel Karahalis(TheDuckLord2)** - Team Lead - sgk103 - samgkarahalis@gmail.com  
