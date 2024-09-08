@@ -7,7 +7,11 @@ This repository contains the implementation of a locally hosted e-commerce platf
 The objective of this project is to create an E-Commerce Website. This website functions as an online shopping space in which users buy items.
 
 # **Features:**
-User Management, Product Management, Search and Comparison, Transaction Handling, Admin Management
+User Management - Management of User information including payment details, login info, shipping details, and any other relevant info.
+Product Management - Manage a database of every product and its ID, cost, and any other relevant info.
+Search and Comparison - Ability for a user to search and compare inventory. Search should allow user to search in an effective way.
+Transaction Handling - Ability to get required payment for item from user, while also dealing with adding and removing from cart and other issues.
+Admin Management - Manage the list of authorized admins and allow them to perform needed tasks. Also ability to deny non-admins access to critical features.
 
 # **Languages and Technologies:**
 **Backend:** Python with Django framework  
