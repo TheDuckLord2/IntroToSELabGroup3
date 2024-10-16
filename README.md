@@ -29,3 +29,70 @@ Admin Management - Manage the list of authorized admins and allow them to perfor
 **Seth Sorgen(Shale951)** - Member - sls1233 - sethsorgen@gmail.com  
 **Sam Mclnnis(samstudentacc)** - Member - stm303 - stm303@msstate.edu 
 
+
+# **Installation**
+
+### **1. Clone the Repository**
+
+To get started, clone the project repository from GitHub:
+
+```bash
+git clone https://github.com/your_username/ecommerce-store-project.git
+```
+
+Navigate into the project directory:
+
+```bash
+cd ecommerce-store
+```
+
+### **2. Install Dependencies**
+
+Install the project dependencies listed in the `requirements.txt` file:
+
+```bash
+pip install -r requirements.txt
+```
+
+### **3. Set Up the Database**
+
+1. Open your MySQL client or MySQL Workbench.
+2. Create a new database:
+
+```sql
+CREATE DATABASE ecommerce_store;
+```
+
+### **4. Configure the Project**
+
+Update the `DATABASES` settings in the `ecommerce_store/settings.py` file to match your local MySQL setup:
+
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ecommerce_store',  # Use the name of the database you just created
+        'USER': 'your_mysql_username',
+        'PASSWORD': 'your_mysql_password',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
+```
+
+### **5. Run Database Migrations**
+
+Apply the migrations to create the necessary tables in your MySQL database:
+
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+### **6. Run the Development Server**
+
+Start the Django development server:
+
+```bash
+python manage.py runserver
+```
