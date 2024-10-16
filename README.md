@@ -65,20 +65,44 @@ CREATE DATABASE ecommerce_store;
 
 ### **4. Configure the Project**
 
-Update the `DATABASES` settings in the `ecommerce_store/settings.py` file to match your local MySQL setup:
+Create a `.env` file in the root directory of your project to securely store your database credentials. Add the following content to the `.env` file:
+
+```
+DB_NAME=ecommerce_store
+DB_USER=your_mysql_username
+DB_PASSWORD=your_mysql_password
+DB_HOST=localhost
+DB_PORT=3306
+```
+
+Then, update the `DATABASES` settings in the `ecommerce_store/settings.py` file to match your local MySQL setup:
 
 ```python
+from decouple import config
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ecommerce_store',  # Use the name of the database you just created
-        'USER': 'your_mysql_username',
-        'PASSWORD': 'your_mysql_password',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
     }
 }
 ```
+
+### **Install `python-decouple`**
+
+Ensure you have the `python-decouple` package installed to use the `config` function:
+
+```bash
+pip install python-decouple
+```
+
+> **Note**: Make sure to add `.env` to your `.gitignore` file to prevent sensitive information from being pushed to your repository.
+
+
 
 ### **5. Run Database Migrations**
 
