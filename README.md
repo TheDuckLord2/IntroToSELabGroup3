@@ -29,3 +29,94 @@ Admin Management - Manage the list of authorized admins and allow them to perfor
 **Seth Sorgen(Shale951)** - Member - sls1233 - sethsorgen@gmail.com  
 **Sam Mclnnis(samstudentacc)** - Member - stm303 - stm303@msstate.edu 
 
+
+# **Installation**
+
+### **1. Clone the Repository**
+
+To get started, clone the project repository from GitHub:
+
+```bash
+git clone https://github.com/your_username/ecommerce-store-project.git
+```
+
+Navigate into the project directory:
+
+```bash
+cd ecommerce-store
+```
+
+### **2. Install Dependencies**
+
+Install the project dependencies listed in the `requirements.txt` file:
+
+```bash
+pip install -r requirements.txt
+```
+
+### **3. Set Up the Database**
+
+1. Open your MySQL client or MySQL Workbench.
+2. Create a new database:
+
+```sql
+CREATE DATABASE ecommerce_store;
+```
+
+### **4. Configure the Project**
+
+Create a `.env` file in the root directory of your project to securely store your database credentials. Add the following content to the `.env` file:
+
+```
+DB_NAME=ecommerce_store
+DB_USER=your_mysql_username
+DB_PASSWORD=your_mysql_password
+DB_HOST=localhost
+DB_PORT=3306
+```
+
+Then, update the `DATABASES` settings in the `ecommerce_store/settings.py` file to match your local MySQL setup:
+
+```python
+from decouple import config
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
+    }
+}
+```
+
+### **Install `python-decouple`**
+
+Ensure you have the `python-decouple` package installed to use the `config` function:
+
+```bash
+pip install python-decouple
+```
+
+> **Note**: Make sure to add `.env` to your `.gitignore` file to prevent sensitive information from being pushed to your repository.
+
+
+
+### **5. Run Database Migrations**
+
+Apply the migrations to create the necessary tables in your MySQL database:
+
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+### **6. Run the Development Server**
+
+Start the Django development server:
+
+```bash
+python manage.py runserver
+```
