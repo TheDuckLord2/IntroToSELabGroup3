@@ -83,4 +83,20 @@ class OrderDetails(models.Model):
         db_table = 'OrderDetails'
 
     def __str__(self):
-        return f"Order Details {self.id} for Order {self.order.id}"
+        return f"Order {self.order.id} Order Details "
+
+class ShippingInformation(models.Model):
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)
+    recipient_name = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    postal_code = models.CharField(max_length=20)
+    country = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=20)
+
+    class Meta:
+        db_table = 'ShippingInformation'
+
+    def __str__(self):
+        return f"Shipping for Order {self.order.id}"
