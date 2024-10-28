@@ -3,9 +3,12 @@ from rest_framework.views import APIView
 from django.views import View
 from django.http import JsonResponse
 from api.serializers import UserCreationSerializer
+from api.serializers import InventorySerializer
 from api.models import UserCreation
+from api.models import Inventory
 from rest_framework import viewsets
 from rest_framework.response import Response
+
 
 #returns static data, used to make sure a webpage can work
 class StaticDataView(View):
@@ -35,4 +38,13 @@ class UserCreationView(viewsets.ModelViewSet):
         users = self.get_queryset()
         serializer = self.get_serializer(users, many=True)
         #Response formats an HTTP response for the data
+        return Response(serializer.data)
+
+class InventoryView(viewsets.ModelViewSet):
+    queryset = Inventory.objects.all()
+    serializer_class = InventorySerializer
+    def list(self, request):
+        inventories = self.get_queryset()
+        serializer = self.get_serializer(inventories, many=True)
+
         return Response(serializer.data)
