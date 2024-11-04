@@ -1,0 +1,38 @@
+nav{
+    position:sticky;
+    top: 10px;
+    background-color:lightgray;
+    border: 2px solid;
+    padding: 5px;
+    text-align:right;
+}
+
+footer{
+    position:absolute;
+    bottom:0%;
+    left:0%;
+    background-color:lightgray;
+    width:100%;
+    text-align: center;
+}
+
+div{
+    border:2px solid;
+    background-color: whitesmoke;
+}
+
+table{
+    border: 2px solid;
+    border-collapse: collapse;
+    background-color:lightslategray;
+    text-align:center;
+}
+
+td{
+    border:2px solid;
+}
+
+#title-block{
+    text-align:center;
+    background-color: lightcoral;
+}
