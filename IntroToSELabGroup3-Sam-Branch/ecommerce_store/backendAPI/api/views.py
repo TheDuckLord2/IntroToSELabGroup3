@@ -3,11 +3,11 @@ from rest_framework.views import APIView
 from django.views import View
 from django.http import JsonResponse
 from api.serializers import UserCreationSerializer
-from api.serializers import InventorySerializer
+from api.serializers import CartSerializer
 from api.serializers import CreatedUserSerializer
 from api.models import UserCreation
 from api.models import CreatedUser
-from api.models import Inventory
+from api.models import Cart
 from rest_framework import viewsets
 from rest_framework.response import Response
 
@@ -16,6 +16,24 @@ def gethome(request):
 
 def getcontact(request):
     return render(request, "store\\contact.html")
+
+def getbase(request):
+    return render(request, "store\\base.html")
+
+def getabout(request):
+    return render(request, "store\\about.html")
+
+def getadmin(request):
+    return render(request, "store\\admin.html")
+
+def getcart(request):
+    return render(request, "store\\cart.html")
+
+def getlogin(request):
+    return render(request, "store\\login.html")
+
+def getproduct(request):
+    return render(request, "store\\product.html")
 
 
 #returns static data, used to make sure a webpage can work
@@ -73,11 +91,11 @@ class RegisterView(viewsets.ModelViewSet):
 
 
 
-class InventoryView(viewsets.ModelViewSet):
-    queryset = Inventory.objects.all()
-    serializer_class = InventorySerializer
+class CartView(viewsets.ModelViewSet):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
     def list(self, request):
-        inventories = self.get_queryset()
-        serializer = self.get_serializer(inventories, many=True)
+        cart = self.get_queryset()
+        serializer = self.get_serializer(cart, many=True)
 
         return Response(serializer.data)

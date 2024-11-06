@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import UserCreation, Inventory, CreatedUser
+from .models import UserCreation, Cart, CreatedUser
 from django.contrib.auth.models import AbstractUser
 from rest_framework.views import APIView
 
@@ -29,7 +29,7 @@ class CreatedUserSerializer(serializers.ModelSerializer):
         model = CreatedUser
         fields = ('email', 'username', 'password')
 
-class InventorySerializer(serializers.ModelSerializer):
+class CartSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Inventory
+        model = Cart
         fields = '__all__'

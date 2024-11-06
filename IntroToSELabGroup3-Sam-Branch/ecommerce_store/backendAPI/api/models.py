@@ -33,7 +33,7 @@ class CreatedUser(models.Model):
         db_table = 'created_users'
 
 
-class Inventory(models.Model):
+class Cart(models.Model):
     id = models.CharField(max_length=5, primary_key=True)
     name = models.CharField(max_length=50)
     description = models.TextField()
