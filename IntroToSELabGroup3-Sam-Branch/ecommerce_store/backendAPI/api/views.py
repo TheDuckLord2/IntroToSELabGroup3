@@ -4,10 +4,18 @@ from django.views import View
 from django.http import JsonResponse
 from api.serializers import UserCreationSerializer
 from api.serializers import InventorySerializer
+from api.serializers import CreatedUserSerializer
 from api.models import UserCreation
+from api.models import CreatedUser
 from api.models import Inventory
 from rest_framework import viewsets
 from rest_framework.response import Response
+
+def gethome(request):
+    return render(request, "store\\home.html")
+
+def getcontact(request):
+    return render(request, "store\\contact.html")
 
 
 #returns static data, used to make sure a webpage can work
@@ -39,6 +47,31 @@ class UserCreationView(viewsets.ModelViewSet):
         serializer = self.get_serializer(users, many=True)
         #Response formats an HTTP response for the data
         return Response(serializer.data)
+
+
+class RegisterView(viewsets.ModelViewSet):
+    queryset = CreatedUser.objects.all()
+    serializer_class = CreatedUserSerializer
+
+    def login(self, request):
+        username = request.query_params.get('username', None)
+        password = request.query_params.get('password', None)
+
+        if not username:
+            return Response({"Invalid Entry: Please enter an email."},status=status.HTTP_400_BAD_REQUEST)
+
+        if not password:
+            return Response({"Invalid Entry: Please enter a password."},status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user_username = CreatedUser.objects.get(username=username)
+            user_password = CreatedUser.objects.get(password=password)
+            return Response({"Login Successful."},status=status.HTTP_200_OK)
+
+        except CreatedUser.DoesNotExist:
+            return Response({"Username or Password does not exist."},status=status.HTTP_400_BAD_REQUEST)
+
+
 
 class InventoryView(viewsets.ModelViewSet):
     queryset = Inventory.objects.all()
