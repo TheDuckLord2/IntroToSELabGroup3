@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import UserCreation, Cart, CreatedUser
+from .models import UserCreation, Cart, CreatedUser, Product, CartItem
 from django.contrib.auth.models import AbstractUser
-from rest_framework.views import APIView
+from rest_framework.views import APIView 
 
 
 #serialization takes complicated django models and turns them into python
@@ -29,7 +29,22 @@ class CreatedUserSerializer(serializers.ModelSerializer):
         model = CreatedUser
         fields = ('email', 'username', 'password')
 
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['id', 'name', 'description', 'price', 'stock_quantity']
+
+class CartItemSerializer(serializers.ModelSerializer):
+    product = ProductSerializer()
+
+    class Meta:
+        model = CartItem
+        fields = ('id', 'product', 'quantity')
+
 class CartSerializer(serializers.ModelSerializer):
+    items = CartItemSerializer(many=True)
+    
     class Meta:
         model = Cart
         fields = '__all__'
+
