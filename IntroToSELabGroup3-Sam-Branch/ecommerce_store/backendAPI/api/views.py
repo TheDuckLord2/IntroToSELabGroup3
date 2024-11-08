@@ -5,9 +5,13 @@ from django.http import JsonResponse
 from api.serializers import UserCreationSerializer
 from api.serializers import CartSerializer
 from api.serializers import CreatedUserSerializer
+from api.serializers import ProductSerializer
+from api.serializers import CartItemSerializer
 from api.models import UserCreation
 from api.models import CreatedUser
 from api.models import Cart
+from api.models import Product
+from api.models import CartItem
 from rest_framework import viewsets
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404, redirect
@@ -101,10 +105,80 @@ class LoginView(viewsets.ModelViewSet):
             return Response({"Username or Password does not exist."},status=status.HTTP_400_BAD_REQUEST)
 
 
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
 
 class CartView(viewsets.ModelViewSet):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
+
+    def get_queryset(self):
+        # Retrieve the cart for the logged-in user
+        return Cart.objects.filter(user=self.request.user)
+
+    def create(self, request, *args, **kwargs):
+        # If a cart doesn't exist for this user, create one
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        if created:
+            return Response({"message": "Cart created."}, status=201)
+        return Response({"message": "Cart already exists."})
+
+    def add_to_cart(self, request, pk=None):
+        cart = self.get_object()  # Get the cart instance for the logged-in user
+
+        product_id = request.data.get("product_id")
+        quantity = request.data.get("quantity")
+
+        if not product_id or not quantity:
+            return Response({"error": "Product ID and quantity are required."}, status=400)
+
+        try:
+            product = Product.objects.get(id=product_id)
+            
+        except Product.DoesNotExist:
+            return Response({"error": "Product not found."}, status=404)
+
+        if quantity > product.stock_quantity:
+            return Response({"error": "Not enough stock available."}, status=400)
+
+        # Check if the product is already in the cart
+        cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+
+        # Update the quantity if the item already exists in the cart
+        if not created:
+            cart_item.quantity += int(quantity)
+        else:
+            cart_item.quantity = int(quantity)
+
+        # Save the cart item
+        cart_item.save()
+
+        # Update the cart's total price
+        cart.save()
+
+        return Response(CartSerializer(cart).data)
+
+    def remove_from_cart(self, request, pk=None):
+        cart = self.get_object()  # Get the cart instance for the logged-in user
+        product_id = request.data.get("product_id")
+
+        if not product_id:
+            return Response({"error": "Product ID is required."}, status=400)
+
+        try:
+            product = Product.objects.get(id=product_id)
+        except Product.DoesNotExist:
+            return Response({"error": "Product not found."}, status=404)
+
+        # Try to find the cart item
+        try:
+            cart_item = CartItem.objects.get(cart=cart, product=product)
+            cart_item.delete()
+            return Response({"message": "Product removed from cart."}, status=204)
+        except CartItem.DoesNotExist:
+            return Response({"error": "Product not in cart."}, status=404)
+            
     def list(self, request):
         cart = self.get_queryset()
         serializer = self.get_serializer(cart, many=True)
