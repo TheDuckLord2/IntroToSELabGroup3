@@ -34,14 +34,41 @@ class CreatedUser(models.Model):
 
 
 class Cart(models.Model):
-    id = models.CharField(max_length=5, primary_key=True)
-    user_id = models.CharField(max_length=50)
-    description = models.TextField()
-    price = models.DecimalField(max_digits=5, decimal_places=2)
-    quantity = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # The user who owns the cart
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_active = models.BooleanField(default=True)  # To track if the cart is still active or abandoned
+
+    def __str__(self):
+        return f"Cart for {self.user.username}"
+
+    def total_price(self):
+        total = sum(item.total_price() for item in self.items.all())
+        return total
+
+    def item_count(self):
+        return self.items.count()
+
+    class Meta:
+        db_table = "storestock"
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, related_name="items", on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"{self.quantity} of {self.product.name}"
+
+    def get_total_price(self):
+        return self.product.price * self.quantity
+
+    class Meta:
+        unique_together = ('cart', 'product')
+
+class Product(models.Model):
+    name = models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
         return self.name
-
-    class Meta:
-        db_table = 'storestock'
