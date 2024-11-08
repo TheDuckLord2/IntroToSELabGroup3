@@ -1,12 +1,12 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from .models import Cart
+from .models import Cart, CreatedUser, UserCreation
 from .views import UserCreationView
 from .views import CartView
 from .views import ProductViewSet
 from .views import StaticDataView
-from .views import RegisterView
+from .views import LoginView
 from .views import gethome
 from . import views, admin
 
@@ -15,6 +15,7 @@ router.register(r'users', UserCreationView) #this is sign up
 router.register(r'cart', CartView) #this is cart
 router.register(r'products', ProductViewSet) #Products view
 router.register(r'register', RegisterView) #this is login
+
 
 urlpatterns = [
     path('', include(router.urls)),
@@ -25,6 +26,7 @@ urlpatterns = [
     path('admin/', views.getadmin, name='admin'),
     path('base/', views.getbase, name='base'),
     path('cart/', views.getcart, name='cart'),
-    path('login/', views.getlogin, name='login'),
+    path('register/', views.getregister, name='register'),
     path('product/', views.getproduct, name='product'),
+    path('login/', views.getlogin, name='login'),
 ]
