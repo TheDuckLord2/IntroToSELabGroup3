@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_extensions',
     #needed to display SQL data through endpoints
     'rest_framework',
+    'templates/store',
 ]
 
 MIDDLEWARE = [
@@ -133,3 +134,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'templates/store.UserCreation'
