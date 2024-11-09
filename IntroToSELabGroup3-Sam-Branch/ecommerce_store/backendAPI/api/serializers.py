@@ -12,16 +12,16 @@ class UserCreationSerializer(serializers.ModelSerializer):
         #accepts all data fields, quick and easy
         fields = '__all__'
 
-        def create(self, validated_data):
-            user = CustomUser(
-                id=validated_data['id'],
-                username=validated_data['username'],
-                email=validated_data['email'],
-                account_type=validated_data.get('account_type', 'default')  # Add default if needed
-            )
-            user.set_password(validated_data['password'])  # Hashes the password
-            user.save()
-            return user
+    def create(self, validated_data):
+        user = CustomUser(
+            id=validated_data['id'],
+            username=validated_data['username'],
+            email=validated_data['email'],
+            account_type=validated_data.get('account_type', 'default')  # Add default if needed
+        )
+        user.set_password(validated_data['password'])  # Hashes the password
+        user.save()
+        return user
 
 
 class CreatedUserSerializer(serializers.ModelSerializer):
