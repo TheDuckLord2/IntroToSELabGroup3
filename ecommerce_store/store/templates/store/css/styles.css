@@ -19,13 +19,17 @@ footer{
 div{
     border:2px solid;
     background-color: whitesmoke;
+    text-align:center;
+    padding:10px;
 }
 
 table{
     border: 2px solid;
     border-collapse: collapse;
-    background-color:lightslategray;
+    background-color:lightgray;
     text-align:center;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 td{
@@ -35,4 +39,22 @@ td{
 #title-block{
     text-align:center;
     background-color: lightcoral;
+}
+
+#item-update,#welcome-page{
+    position:absolute;
+    width:47%;
+    left:1%;
+    padding:10px;
+    text-align:center;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#new-item,#admin-list,#home-cart{
+    position:absolute;
+    width:47%;
+    right:1%;
+    padding:10px;
+    text-align:center;
 }
