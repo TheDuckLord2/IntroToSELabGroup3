@@ -6,7 +6,7 @@
 <div id="title-block">
     <h1>Welcome to the Management Dashboard!</h1>
 </div>
-<div>
+<div id="item-update">
     <h2>Product List</h2>
     <table>
         {% for item in storestock}
@@ -18,11 +18,25 @@
                     <td>${{ item.item_total }}</td>
                     <td>                
                         <a href="{% url 'update_storestock' item.product.id %}">Update</a> |
-                        <a href="{% url 'remove_from_storestock' item.product.id %}">Remove</a><
+                        <a href="{% url 'remove_from_storestock' item.product.id %}">Remove</a>
                     </td>
                 </tr>
             {% endif %}
         {% endfor %}
     </table>
+</div>
+<div id="new-item">
+    <h2>Add New Item to Stock</h2>
+    <form method="post" action="{% url 'new_product' %}">
+        <label for="productname">Product Name:</label><br>
+        <input type="text" id="productname" name="productname"><br>
+        <label for="productquantity">Quantity:</label><br>
+        <input type="number" id="productquantity" name="productquantity"><br>
+        <label for="productprice">Price:</label><br>
+        <input type="number" step="0.01" id="productprice" name="productprice"><br>
+        <label for="productdesc">Description:</label><br>
+        <textarea id="productdesc" name="productdesc" rows="5"></textarea><br><br>
+        <input type="submit" value="Submit">
+    </form>
 </div>
 {% endblock %}
