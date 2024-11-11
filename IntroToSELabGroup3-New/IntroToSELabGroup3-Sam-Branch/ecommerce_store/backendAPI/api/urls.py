@@ -31,10 +31,13 @@ urlpatterns = [
     path('admin/', views.getadmin, name='admin'),
     path('base/', views.getbase, name='base'),
     path('cart/', views.getcart, name='cart_html'),  # Render the cart HTML page
-    path('api/cart/', CartView.as_view({'get': 'list'}), name='cart_api'),
+    path('cart/', CartView.as_view({'get': 'list'}), name='cart_api'),
     path('register/', RegisterView.as_view(), name='register'),
     path('product/', views.getproduct, name='product'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LoginView.as_view(), name='logout'),
     path('api/', include(router.urls)),
+    path('cart/', views.getcart, name='cart'),
+    path('update-cart/<int:product_id>/', views.update_cart, name='update_cart'),
+    path('remove-from-cart/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),
 ]

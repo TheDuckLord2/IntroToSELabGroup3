@@ -150,14 +150,14 @@ class User(AbstractUser):
     )
 
     class Meta:
-        db_table = 'user'
+        db_table = 'User'
 
     def __str__(self):
         return self.username
 
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    item = models.ForeignKey(StoreStock, on_delete=models.CASCADE)
+    item = models.ForeignKey(StoreStock, on_delete=models.CASCADE, default=None)
     quantity = models.IntegerField(default=1)
 
     class Meta:
@@ -165,6 +165,22 @@ class Cart(models.Model):
 
     def __str__(self):
         return f"Cart of {self.user.username}"
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, related_name='items', on_delete=models.CASCADE)
+    product = models.ForeignKey(StoreStock, related_name='cart_items', on_delete=models.CASCADE, default=None)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def total_price(self):
+        return self.product.price * self.quantity
+
+    class Meta:
+        db_table = 'CartItem'
+
+    def __str__(self):
+        return f"{self.quantity} x {self.product.name}"
+
+
 
 class Order(models.Model):
     STATUS = [
