@@ -3,8 +3,10 @@
 {% block title %}Login - e-Commerce Store{% endblock %}
 
 {% block content %}
-<div class="login-container">
+<div id="title-block">
     <h2>Login</h2>
+</div>
+<div id="login-container">
     <form method="POST" action="{% url 'login' %}">
         {% csrf_token %}
         
