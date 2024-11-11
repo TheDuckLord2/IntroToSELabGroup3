@@ -58,3 +58,11 @@ td{
     padding:10px;
     text-align:center;
 }
+
+#login-container,#signup-container,#product-grid{
+    position:absolute;
+    width:80%;
+    right:10%;
+    padding:10px;
+    text-align:center;
+}
