@@ -1,9 +1,9 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .models import Cart, CreatedUser, UserCreation
+from .models import Cart, User
 from .views import RegisterView
 from .views import CartView
-from .views import ProductViewSet
+from .views import OrderViewSet
 from .views import StaticDataView
 from .views import LoginView
 from .views import gethome
@@ -17,7 +17,7 @@ from django.views import View
 
 router = DefaultRouter()
 #router.register(r'users', UserCreationView) #this is sign up
-#router.register(r'cart', CartView) #this is cart
+#router.register(r'cart', CartView, basename = 'cart') #this is cart
 #router.register(r'products', ProductViewSet) #Products view
 #router.register(r'register', RegisterView) #this is login
 
@@ -30,8 +30,11 @@ urlpatterns = [
     path('about/', views.getabout, name='about'),
     path('admin/', views.getadmin, name='admin'),
     path('base/', views.getbase, name='base'),
-    path('cart/', views.getcart, name='cart'),
+    path('cart/', views.getcart, name='cart_html'),  # Render the cart HTML page
+    path('api/cart/', CartView.as_view({'get': 'list'}), name='cart_api'),
     path('register/', RegisterView.as_view(), name='register'),
     path('product/', views.getproduct, name='product'),
     path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LoginView.as_view(), name='logout'),
+    path('api/', include(router.urls)),
 ]

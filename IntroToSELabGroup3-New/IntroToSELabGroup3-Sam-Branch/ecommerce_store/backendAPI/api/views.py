@@ -2,16 +2,12 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from django.views import View
 from django.http import JsonResponse
-from api.serializers import UserCreationSerializer
+from api.serializers import UserSerializer
 from api.serializers import CartSerializer
-from api.serializers import CreatedUserSerializer
-from api.serializers import ProductSerializer
-from api.serializers import CartItemSerializer
-from api.models import UserCreation
-from api.models import CreatedUser
-from api.models import Cart
-from api.models import Product
-from api.models import CartItem
+from api.serializers import OrderSerializer
+from api.serializers import OrderDetailsSerializer
+from api.serializers import ShippingDetailsSerializer
+from api.models import User, StoreStock, Cart, Order, OrderDetails, ShippingInformation
 from rest_framework import viewsets
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404, redirect
@@ -44,15 +40,17 @@ def getadmin(request):
 
 
 def getcart(request):
-    '''request.user.is_authenticated'''
-    if request.user.is_authenticated:
-        cart = get_object_or_404(Cart, name='stm303')
-        return render(request, 'cart.html', {'cart': cart})
-    else:
-        return redirect('login')
+    # Retrieve the cart for the logged-in user (similar to the logic in CartView)
+    cart = Cart.objects.filter(user=request.user).first()
+
+    if not cart:
+        cart = Cart.objects.create(user=request.user)  # Create an empty cart if none exists
+
+    # Pass the cart to the template
+    return render(request, 'store/cart.html', {'cart': cart})
 
 
-def getlogin(request):
+'''def getlogin(request):
     # Check if the form has been submitted
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -60,7 +58,7 @@ def getlogin(request):
 
         # Check if the username and password match any entry in created_users
         try:
-            user = CreatedUser.objects.get(username=username)
+            user = .objects.get(username=username)
             if user.password == password:  # Check if password matches
                 # Authenticate and log the user in
                 user = authenticate(username=username, password=password)
@@ -74,7 +72,7 @@ def getlogin(request):
         except CreatedUser.DoesNotExist:
             messages.error(request, "User does not exist.")
 
-    return render(request, 'login.html')  # Replace with your login template
+    return render(request, 'login.html')  # Replace with your login template'''
 
 def getregister(request):
     return render(request, "store\\register.html")
@@ -131,40 +129,58 @@ class RegisterView(View):
 
 
 class LoginView(View):
-    # Handle GET request to show the login form
     def get(self, request):
-        return render(request, 'store\\login.html')  # Your login template
+        # Render the login page when the user navigates to the login page
+        return render(request, 'store/login.html')
 
-    # Handle POST request to check login credentials
     def post(self, request):
+        # Get the username and password from the POST request
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        # Check if the username and password match any entry in created_users
+        # Debugging output to check if the data is being passed correctly
+        print(f"Attempting to log in with username: {username} and password: {password}")
+
         try:
-            user = CreatedUser.objects.get(username=username)
-            if user.password == password:  # Check if password matches
-                # Authenticate and log the user in
-                user = authenticate(username=username, password=password)
-                if user is not None:
+            # Retrieve the user from the 'created_users' table by username
+            user = User.objects.get(username=username)
+
+            # Debugging output to check if the user is retrieved
+            print(f"User found: {user}")
+            print(f"Password: {user.password}")
+            print(f"Input: {password}")
+            # Check if the provided password matches the hashed password in the database
+            if user.password == password:  # Use user.check_password() for hashed passwords
+                print("Password is correct. Attempting to authenticate.")
+                #user = authenticate(request, username=username, password=password)
+                #request.session['user_id'] = user.id
+                login(request, user)
+                return redirect('cart')
+                '''if user is not None:
+                    print("Authentication successful.")
                     login(request, user)
-                    return redirect('store\\cart')  # Redirect to the home page after successful login
+                    return redirect('store/cart.html')  # Redirect to the user's home page or cart page after successful login
                 else:
-                    messages.error(request, "Invalid username or password.")
+                    print("Authentication failed.")
+                    messages.error(request, "Invalid username or password.")'''
             else:
+                print("Password mismatch.")
                 messages.error(request, "Invalid username or password.")
-        except CreatedUser.DoesNotExist:
+        except User.DoesNotExist:
+            # Handle the case where the user doesn't exist in the database
+            print("User does not exist.")
             messages.error(request, "User does not exist.")
 
-        return render(request, 'store\\cart.html')
+        # If the login fails, render the login page again with error messages
+        return render(request, 'store/login.html')
 
 
-class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+class OrderViewSet(viewsets.ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
 
 
-class CartView(viewsets.ModelViewSet):
+class CartView(viewsets.ViewSet):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
 
@@ -236,6 +252,6 @@ class CartView(viewsets.ModelViewSet):
 
     def list(self, request):
         cart = self.get_queryset()
-        serializer = self.get_serializer(cart, many=True)
+        serializer = CartSerializer(cart, many=True)
 
         return Response(serializer.data)

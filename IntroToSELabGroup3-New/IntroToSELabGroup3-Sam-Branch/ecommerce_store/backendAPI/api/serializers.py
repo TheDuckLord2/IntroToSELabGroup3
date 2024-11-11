@@ -1,14 +1,14 @@
 from rest_framework import serializers
-from .models import Cart, CreatedUser, Product, CartItem, UserCreation
+from .models import Cart, User, OrderDetails, Order, ShippingInformation
 from django.contrib.auth.models import AbstractUser
 from rest_framework.views import APIView
 
 
 # serialization takes complicated django models and turns them into python
 # forms which can be converted in JSON data
-class UserCreationSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = UserCreation
+        model = User
         # accepts all data fields, quick and easy
         fields = '__all__'
 
@@ -24,29 +24,25 @@ class UserCreationSerializer(serializers.ModelSerializer):
             return user
 
 
-class CreatedUserSerializer(serializers.ModelSerializer):
+class ShippingDetailsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CreatedUser
-        fields = ('email', 'username', 'password')
+        model = ShippingInformation
+        fields = '__all__'
 
 
-class ProductSerializer(serializers.ModelSerializer):
+class OrderSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Product
+        model = Order
         fields = ['id', 'name', 'description', 'price', 'stock_quantity']
 
 
-class CartItemSerializer(serializers.ModelSerializer):
-    product = ProductSerializer()
-
+class OrderDetailsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CartItem
-        fields = ('id', 'product', 'quantity')
+        model = OrderDetails
+        fields ='__all__'
 
 
 class CartSerializer(serializers.ModelSerializer):
-    items = CartItemSerializer(many=True)
-
     class Meta:
         model = Cart
         fields = '__all__'
