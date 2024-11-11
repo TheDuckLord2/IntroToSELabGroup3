@@ -75,7 +75,33 @@ def getcart(request):
     return render(request, 'login.html')  # Replace with your login template'''
 
 def getregister(request):
-    return render(request, "store\\register.html")
+        if request.method == "POST":
+        # Get form data from POST request
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+
+        # Validate passwords match
+        if password1 != password2:
+            return render(request, 'store/signup.html', {
+                'error_message': "Passwords don't match. Please try again."
+            })
+        
+        try:
+            # Create the user if not exists
+            user = User.objects.create_user(username=username, email=email, password=password1)
+            user.save()
+            # Auto-login the user after successful registration
+            login(request, user)
+            return redirect('home')  # Redirect to the home page after registration
+        except Exception as e:
+            return render(request, 'store/signup.html', {
+                'error_message': f"An error occurred: {str(e)}. Please try again."
+            })
+    else:
+        # Handle GET request (just show the empty form)
+        return render(request, 'store/signup.html')
 
 
 def getproduct(request):
