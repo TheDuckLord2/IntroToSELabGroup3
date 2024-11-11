@@ -4,8 +4,10 @@
 
 {% block content %}
 <main>
-    <h1>Our Products</h1>
-    <div class="product-grid">
+    <div id="title-block">
+        <h1>Our Products</h1>
+    </div>
+    <div id="product-grid">
         {% for product in products %}
             <div class="product-card">
                 <img src="{{ product.image.url }}" alt="{{ product.name }}">
