@@ -381,3 +381,11 @@ class CartView(viewsets.ViewSet):
         cart = self.get_queryset()
         serializer = CartSerializer(cart, many=True)
         return Response(serializer.data, status=200)
+
+def products_view(request):
+    products = StoreStock.objects.all()
+    return render(request, 'store/products.html', {'products': products})
+
+def product_detail_view(request, product_id):
+    product = get_object_or_404(StoreStock, id=product_id)
+    return render(request, 'store/product_detail.html', {'product': product})
