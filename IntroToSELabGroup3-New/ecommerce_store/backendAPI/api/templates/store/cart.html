@@ -1,0 +1,55 @@
+{% extends "store/base.html" %}
+
+{% block title %}Cart - e-Commerce Store{% endblock %}
+
+{% block content %}
+<main>
+    <div id="title-block"><h1>Your Cart</h1></div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}" style="color: red; margin-bottom: 20px;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="cart-items">
+        {% if cart_items %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>
+                            <form action="{% url 'update_cart' item.product.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" required style="width: 50px;">
+                                <button type="submit">Update</button>
+                            </form>
+                        </td>
+                        <td>${{ item.product.price }}</td>
+                        <td>${{ item.total_price }}</td>
+                        <td>
+                            <a href="{% url 'remove_from_cart' item.product.id %}">Remove</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <p><strong>Total: </strong>${{ total }}</p>
+        {% else %}
+            <p>Your cart is currently empty.</p>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}
