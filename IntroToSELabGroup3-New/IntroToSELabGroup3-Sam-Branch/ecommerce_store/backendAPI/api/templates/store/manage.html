@@ -28,6 +28,8 @@
 <div id="new-item">
     <h2>Add New Item to Stock</h2>
     <form method="post" action="{% url 'new_product' %}">
+        {% csrf_token %}
+
         <label for="productname">Product Name:</label><br>
         <input type="text" id="productname" name="productname"><br>
         <label for="productquantity">Quantity:</label><br>

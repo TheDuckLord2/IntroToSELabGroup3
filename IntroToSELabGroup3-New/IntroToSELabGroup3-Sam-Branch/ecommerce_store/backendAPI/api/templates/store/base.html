@@ -11,14 +11,25 @@
 
 <main>
     <nav>
-        <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'cart_html' %}">Cart</a>
-        <a href="{% url 'about' %}">About Us</a>
-        <a href="{% url 'contact' %}">Contact</a>
-	<a href="{% url 'product' %}">Products</a>
         {% if user.is_authenticated %}
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'cart_html' %}">Cart</a>
+            <a href="{% url 'about' %}">About Us</a>
+            <a href="{% url 'contact' %}">Contact</a>
+            <a href="{% url 'product' %}">Products</a>
+            {% if user.is_staff %}
+                <a href="{% url 'manage' %}">Manager Dashboard</a>
+            {% endif %}
+            {% if user.if_superuser %}
+            <a href="{% url 'admin' %}">Administrator Dashboard</a>
+            {% endif %}
             <a href="{% url 'logout' %}">Log Out</a>
         {% else %}
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'login' %}">Cart</a>
+            <a href="{% url 'about' %}">About Us</a>
+            <a href="{% url 'contact' %}">Contact</a>
+            <a href="{% url 'product' %}">Products</a>
             <a href="{% url 'login' %}">Log In/Sign Up</a>
         {% endif %}
     </nav>
