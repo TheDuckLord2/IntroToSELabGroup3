@@ -11,27 +11,27 @@ from django.contrib.auth.decorators import login_required
 
 # View Functions for Rendering Templates
 def gethome(request):
-    return render(request, "store\\templates/store/home.html")
+    return render(request, "store/home.html")
 
 
 def getcontact(request):
-    return render(request, "store\\templates/store/contact.html")
+    return render(request, "store/contact.html")
 
 
 def getbase(request):
-    return render(request, "store\\templates/store/base.html")
+    return render(request, "store/base.html")
 
 
 def getabout(request):
-    return render(request, "store\\templates/store/about.html")
+    return render(request, "store/about.html")
 
 
 def getadmin(request):
-    return render(request, "store\\templates/store/admin.html")
+    return render(request, "store/admin.html")
 
 
 def getproduct(request):
-    return render(request, "store\\templates/store/products.html")
+    return render(request, "store/products.html")
 
 def logout_view(request):
     logout(request)
@@ -48,7 +48,7 @@ def getcart(request):
             'cart_items': None,
             'total': 0,
         }
-        return render(request, 'store/templates/store/cart.html', context)
+        return render(request, 'store/cart.html', context)
 
     # Get all items in the cart
     cart_items = CartItem.objects.filter(cart=cart)
@@ -62,7 +62,7 @@ def getcart(request):
         'total': total,
     }
 
-    return render(request, 'store/templates/store/cart.html', context)
+    return render(request, 'store/cart.html', context)
 
 def getregister(request):
     if request.method == "POST":
@@ -74,13 +74,13 @@ def getregister(request):
 
         # Check if account type is selected
         if not account_type:
-            return render(request, 'store/templates/store/register.html', {
+            return render(request, 'store/register.html', {
                 'error_message': "Please select an account type."
             })
 
         # Validate passwords match
         if password1 != password2:
-            return render(request, 'store/templates/store/register.html', {
+            return render(request, 'store/register.html', {
                 'error_message': "Passwords don't match. Please try again."
             })
 
@@ -98,11 +98,11 @@ def getregister(request):
             login(request, user)
             return redirect('home')
         except Exception as e:
-            return render(request, 'store/templates/store/register.html', {
+            return render(request, 'store/register.html', {
                 'error_message': f"An error occurred: {str(e)}. Please try again."
             })
     else:
-        return render(request, 'store/templates/store/register.html')
+        return render(request, 'store/register.html')
 
 
 
@@ -211,7 +211,7 @@ class StaticDataView(View):
 class RegisterView(View):
     def get(self, request):
         # Display registration form
-        return render(request, 'store/templates/store/register.html')
+        return render(request, 'store/register.html')
 
     def post(self, request):
         # Handle form submission
@@ -223,19 +223,19 @@ class RegisterView(View):
 
         # Check if account type is selected
         if not account_type:
-            return render(request, 'store/templates/store/register.html', {
+            return render(request, 'store/register.html', {
                 'error_message': "Please select an account type."
             })
 
         # Validate passwords match
         if password1 != password2:
-            return render(request, 'store/templates/store/register.html', {
+            return render(request, 'store/register.html', {
                 'error_message': "Passwords don't match. Please try again."
             })
 
         # Check if the username already exists
         if get_user_model().objects.filter(username=username).exists():
-            return render(request, 'store/templates/store/register.html', {
+            return render(request, 'store/register.html', {
                 'error_message': "Username already exists. Please choose another one."
             })
 
@@ -254,13 +254,13 @@ class RegisterView(View):
             return redirect('home')
         except Exception as e:
             # Handle other exceptions (e.g., duplicate email or database errors)
-            return render(request, 'store/templates/store/register.html', {
+            return render(request, 'store/register.html', {
                 'error_message': f"An error occurred: {str(e)}. Please try again."
             })
 
 class LoginView(View):
     def get(self, request):
-        return render(request, 'store/templates/store/login.html')
+        return render(request, 'store/login.html')
 
     def post(self, request):
         # Retrieve username and password from POST request
@@ -287,7 +287,7 @@ class LoginView(View):
 
             print("[DEBUG] Authentication failed. Password mismatch or user not found.")
             messages.error(request, "Invalid username or password.")
-            return render(request, 'store/templates/store/login.html')
+            return render(request, 'store/login.html')
 
 def logout_view(request):
     # Log the user out
