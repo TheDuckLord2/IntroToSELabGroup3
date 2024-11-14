@@ -31,6 +31,7 @@ urlpatterns = [
     path('product/<int:product_id>/', views.product_detail_view, name='product_detail'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', views.logout_view, name='logout'),
+    path('search/', views.product_search, name='product_search'),
     path('api/', include(router.urls)),
 
 ]

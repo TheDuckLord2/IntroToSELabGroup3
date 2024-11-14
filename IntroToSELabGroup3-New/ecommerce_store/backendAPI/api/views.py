@@ -8,6 +8,8 @@ from rest_framework.response import Response
 from api.serializers import CartSerializer, OrderSerializer
 from api.models import User, StoreStock, Cart, Order, OrderDetails, ShippingInformation, CartItem
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+
 
 # View Functions for Rendering Templates
 def gethome(request):
@@ -36,6 +38,16 @@ def getproduct(request):
 def logout_view(request):
     logout(request)
     return redirect('home')
+
+def product_search(request):
+    query = request.GET.get('q', '')  # Get the search query, default is empty string
+    products = StoreStock.objects.all()
+
+    if query:
+        # Search for products that contain the query string in their name (case-insensitive)
+        products = products.filter(Q(name__icontains=query))
+
+    return render(request, 'products/search_results.html', {'products': products, 'query': query})
 
 @login_required(login_url='login')
 def getcart(request):
@@ -192,6 +204,7 @@ def add_to_cart(request, product_id):
 
 
 # Class-Based Views
+
 class StaticDataView(View):
     def get(self, request):
         # Define static data to return as JSON

@@ -5,16 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b596b47-013e-4f7d-aee6-dda1cb6855a6" name="Changes" comment="Update views">
+      <change afterPath="$PROJECT_DIR$/.idea/IntroToSELabGroup3.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/fffecb3c-ae05-4097-bb28-d69fae09ff8c.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/fffecb3c-ae05-4097-bb28-d69fae09ff8c/storage_v2/_src_/schema/test12.M263yw.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/api/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/api/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/api/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/api/static/css/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/api/templates/store/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/api/templates/store/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/api/templates/store/cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/api/templates/store/cart.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/api/templates/store/products.html" beforeDir="false" afterPath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/api/templates/store/products.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/api/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/api/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/api/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/backendAPI/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/backendAPI/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/backendAPI/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/backendAPI/urls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +41,10 @@
     &quot;accountId&quot;: &quot;5a701ad8-f442-4f10-bfe7-1d34db6959b6&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/api/models.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/api/views.py" root0="SKIP_INSPECTION" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -49,24 +53,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Working__Branch",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Working__Branch&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="IntroToSELabGroup3Working" type="Python.DjangoServer" factoryName="Django server">
       <module name="IntroToSELabGroup3Working" />
@@ -96,8 +101,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23726.102" />
-        <option value="bundled-python-sdk-5e1850174b45-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23726.102" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23339.19" />
+        <option value="bundled-python-sdk-0029f7779945-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23339.19" />
       </set>
     </attachedChunks>
   </component>
@@ -112,6 +117,8 @@
       <workItem from="1731376367094" duration="37000" />
       <workItem from="1731376419375" duration="92000" />
       <workItem from="1731376531630" duration="10296000" />
+      <workItem from="1731537185235" duration="2332000" />
+      <workItem from="1731598586509" duration="289000" />
     </task>
     <task id="LOCAL-00001" summary="Update Branch">
       <option name="closed" value="true" />
