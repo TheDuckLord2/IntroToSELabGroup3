@@ -5,16 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b596b47-013e-4f7d-aee6-dda1cb6855a6" name="Changes" comment="Update views">
-      <change afterPath="$PROJECT_DIR$/.idea/IntroToSELabGroup3.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/fffecb3c-ae05-4097-bb28-d69fae09ff8c.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/fffecb3c-ae05-4097-bb28-d69fae09ff8c/storage_v2/_src_/schema/test12.M263yw.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/api/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/api/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/api/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/backendAPI/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/IntroToSELabGroup3-New/ecommerce_store/backendAPI/backendAPI/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +109,8 @@
       <workItem from="1731376419375" duration="92000" />
       <workItem from="1731376531630" duration="10296000" />
       <workItem from="1731537185235" duration="2332000" />
-      <workItem from="1731598586509" duration="289000" />
+      <workItem from="1731598586509" duration="365000" />
+      <workItem from="1731611625419" duration="20000" />
     </task>
     <task id="LOCAL-00001" summary="Update Branch">
       <option name="closed" value="true" />
