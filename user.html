@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+<div id="profile-container">
+    <h2>Welcome, {{ user.username }}</h2>
+
+    <!-- User Information Section -->
+    <section id="user-info">
+        <h3>Your Information</h3>
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <a href="{% url 'update_profile' %}">Update Profile</a>
+    </section>
+
+    <!-- Order History Section -->
+    <section id="order-history">
+        <h3>Your Orders</h3>
+        {% if orders %}
+            <ul>
+                {% for order in orders %}
+                    <li>
+                        <p><strong>Order ID:</strong> {{ order.id }}</p>
+                        <p><strong>Date:</strong> {{ order.date }}</p>
+                        <p><strong>Total:</strong> ${{ order.total }}</p>
+                        <a href="{% url 'order_detail' order.id %}">View Details</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>You have no recent orders.</p>
+        {% endif %}
+    </section>
+
+    <!-- Link to Cart -->
+    <section id="cart-link">
+        <h3>Your Cart</h3>
+        <p>Items in Cart: {{ cart.item_count }}</p>
+        <a href="{% url 'cart' %}">View Cart</a>
+    </section>
+
+    <!-- Management and Admin Links -->
+    <section id="admin-management-links">
+        {% if user.is_staff or user.is_superuser %}
+            <h3>Admin & Management</h3>
+            <ul>
+                <li><a href="{% url 'admin:index' %}">Admin Dashboard</a></li>
+                {% if user.has_perm('app.view_management') %}
+                    <li><a href="{% url 'management_dashboard' %}">Management Dashboard</a></li>
+                {% endif %}
+            </ul>
+        {% elif user.groups.filter(name='manager').exists %}
+            <h3>Management</h3>
+            <ul>
+                <li><a href="{% url 'management_dashboard' %}">Management Dashboard</a></li>
+            </ul>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}
+
