@@ -7,6 +7,14 @@
     <h1>Welcome to the Admin Dashboard!</h1>
 </div>
     
+     {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}" style="color: red;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    
 <div id="admin-list">
     <h2>Authorized Admins</h2>
     <table>

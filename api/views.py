@@ -419,7 +419,11 @@ def product_detail_view(request, product_id):
 
 
 def getmanage(request):
-    storestock = StoreStock.objects.all()  # Adjust based on your data
+    if request.user.account_type in ['Seller', 'Admin']:  # Check if the user is a seller or admin
+        storestock = StoreStock.objects.filter(seller=request.user)  # Filter products by the logged-in user
+    else:
+        storestock = []  # Other user types should not see any products
+
     return render(request, 'store/manage.html', {'storestock': storestock})
 
 def new_product(request):
@@ -459,6 +463,7 @@ def update_storestock(request, item_id):
             item.image = request.FILES['productimage']
 
         item.save()
+        messages.success(request, "Product updated successfully!")
         return redirect('manage')
 
     return render(request, 'store/update_storestock.html', {'item': item})
@@ -466,6 +471,7 @@ def update_storestock(request, item_id):
 def remove_from_storestock(request, item_id):
     item = get_object_or_404(StoreStock, id=item_id)
     item.delete()
+    messages.success(request, "Product removed successfully!")
     return redirect('manage')
 
 @login_required
@@ -482,6 +488,7 @@ def approve_product(request, item_id):
         product = get_object_or_404(StoreStock, id=item_id)
         product.is_approved = True
         product.save()
+        messages.success(request, "Product approved successfully!")
     return redirect('admin')
 
 
@@ -489,6 +496,7 @@ def reject_product(request, item_id):
     if request.method == "POST":
         product = get_object_or_404(StoreStock, id=item_id)
         product.delete()
+        messages.success(request, "Product rejected!")
     return redirect('admin')
 
 
@@ -560,7 +568,8 @@ def add_to_cart(request, product_id):
 
     cart_item.save()
 
-    # Redirect to the cart page
+    messages.success(request, "Item added to cart successfully!")
+
     return redirect('cart_html')
 
 @login_required
