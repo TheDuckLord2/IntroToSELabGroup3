@@ -1,0 +1,17 @@
+{% extends 'store/base.html' %}
+
+{% block title %}Update Profile{% endblock %}
+
+{% block content %}
+<div id="update-profile-container">
+    <h2>Update Profile</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" value="{{ user.username }}"><br><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" value="{{ user.email }}"><br><br>
+        <button type="submit">Save Changes</button>
+    </form>
+</div>
+{% endblock %}

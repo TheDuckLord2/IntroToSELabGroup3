@@ -1,0 +1,77 @@
+nav{
+    position:sticky;
+    top: 10px;
+    background-color:lightgray;
+    border: 2px solid;
+    padding: 5px;
+    text-align:right;
+}
+
+footer{
+    position:absolute;
+    bottom:0%;
+    left:0%;
+    background-color:lightgray;
+    width:100%;
+    text-align: center;
+}
+
+div{
+    border:2px solid;
+    background-color: whitesmoke;
+    text-align:center;
+    padding:10px;
+}
+
+table{
+    border: 2px solid;
+    border-collapse: collapse;
+    background-color:lightgray;
+    text-align:center;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+td{
+    border:2px solid;
+}
+
+#title-block{
+    text-align:center;
+    background-color: lightcoral;
+}
+
+#item-update,#welcome-page{
+    position:absolute;
+    width:47%;
+    left:1%;
+    padding:10px;
+    text-align:center;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#new-item,#admin-list,#home-cart{
+    position:absolute;
+    width:47%;
+    right:1%;
+    padding:10px;
+    text-align:center;
+}
+
+#login-container,#signup-container,#product-grid{
+    position:absolute;
+    width:80%;
+    right:10%;
+    padding:10px;
+    text-align:center;
+}
+
+.visually-hidden{
+    display:none;
+}
+
+.alert{
+    color: red;
+}
+

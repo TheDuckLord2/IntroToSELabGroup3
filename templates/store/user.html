@@ -1,0 +1,78 @@
+{% extends 'store/base.html' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+<div id="profile-container">
+    <h2>Welcome, {{ user.username }}</h2>
+
+    <!-- User Information Section -->
+    <section id="user-info">
+        <h3>Your Information</h3>
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+    </section>
+
+    <!-- Order History Section (as a table) -->
+    {% if not user.is_staff or user.is_superuser %}
+    <section id="order-history">
+        <h3>Your Orders</h3>
+        {% if orders %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.created_at|date:"Y-m-d" }}</td>
+                        <td>{{ order.status }}</td>
+                        <td>${{ order.total_price }}</td>
+                        <td>
+                            <a href="{% url 'order_detail' order.id %}">View Details</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>You have no recent orders.</p>
+        {% endif %}
+    </section>
+    {% endif %}
+
+    <!-- Cart Section (for non-staff or superusers) -->
+    {% if not user.is_staff or user.is_superuser %}
+    <section id="cart-link">
+        <h3>Your Cart</h3>
+        {% if cart_items %}
+            <p>Items in Cart: {{ cart_items }}</p>
+            <a href="{% url 'cart_html' %}">View Cart</a>
+        {% else %}
+            <p>Your cart is currently empty.</p>
+        {% endif %}
+    </section>
+    {% endif %}
+
+
+    <!-- Links for Staff and Admins -->
+    <section id="role-links">
+        {% if user.is_superuser %}
+            <h3>Seller Tools</h3>
+            <a href="{% url 'manage' %}">Manage Products</a>
+            <h3>Admin Tools</h3>
+            <a href="{% url 'admin' %}">Admin Dashboard</a>
+        {% elif user.is_staff %}
+            <h3>Seller Tools</h3>
+            <a href="{% url 'manage' %}">Manage Products</a>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

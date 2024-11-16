@@ -1,0 +1,33 @@
+{% extends 'store/base.html' %}
+
+{% block title %}Order Details{% endblock %}
+
+{% block content %}
+<h3>Order Details</h3>
+<p><strong>Order ID:</strong> {{ order.id }}</p>
+<p><strong>Status:</strong> {{ order.get_status_display }}</p>
+<p><strong>Total:</strong> ${{ order.total_price }}</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for detail in order_details %}
+        <tr>
+            <td><img src="{{ detail.item.image.url }}" alt="{{ detail.item.name }}" style="width: 100px; height: auto;"></td>
+            <td>{{ detail.item.name }}</td>
+            <td>{{ detail.quantity }}</td>
+            <td>${{ detail.price }}</td>
+            <td>${{ detail.total }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "store/base.html" %}
+
+{% block title %}{{ product.name }} - Product Details{% endblock %}
+
+{% block content %}
+<main>
+    <div id="title-block">
+        <h1>{{ product.name }}</h1>
+    </div>
+    <div id="product-detail">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 200px">
+
+        <p>{{ product.description }}</p>
+        <p><strong>Price:</strong> ${{ product.price }}</p>
+        <p><strong>Stock Quantity:</strong> {{ product.stock_quantity }}</p>
+        <p><strong>Seller:</strong> {{ product.seller.username }}</p>
+
+        <form method="POST" action="{% url 'add_to_cart' product.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn">Add to Cart</button>
+        </form>
+
+    </div>
+</main>
+{% endblock %}

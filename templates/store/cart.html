@@ -1,0 +1,98 @@
+{% extends "store/base.html" %}
+
+{% block title %}Cart - E-Commerce Store{% endblock %}
+
+{% block content %}
+<div id="title-block">
+    <h1>Your Cart</h1>
+</div>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}" style="color: red;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+<div id="cart-items">
+    {% if user.is_authenticated %}
+        {% if cart_items %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>
+                            {% if item.product.image %}
+                                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="width: 100px; height: auto;">
+                            {% else %}
+                                No image available
+                            {% endif %}
+                        </td>
+                        <td>{{ item.product.name }}</td>
+                        <td>
+                            <form action="{% url 'update_cart' item.product.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" required style="width: 50px;">
+                                <button type="submit">Update</button>
+                            </form>
+                        </td>
+                        <td>${{ item.product.price }}</td>
+                        <td>${{ item.total_price }}</td>
+                        <td>
+                            <a href="{% url 'remove_from_cart' item.product.id %}">Remove</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <p><strong>Total: </strong>${{ total }}</p>
+        {% else %}
+            <p>Your cart is empty.</p>
+        {% endif %}
+    {% else %}
+        <h2>Please log in to view your cart.</h2>
+        <div id="auth-buttons">
+            <a href="{% url 'login' %}?account_type=buyer" class="btn">Buyer Login</a>
+            <a href="{% url 'login' %}?account_type=seller" class="btn">Seller Login</a>
+            <a href="{% url 'login' %}?account_type=admin" class="btn">Admin Login</a>
+            <a href="{% url 'register' %}" class="btn">Sign Up</a>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Checkout Section -->
+{% if cart_items %}
+<div id="checkout">
+    <h2>Checkout</h2>
+    <p><strong>Order Total:</strong> ${{ total }}</p>
+
+    <!-- Card Information Form -->
+    <form method="post" action="{% url 'process_payment' %}">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Payment Information</legend>
+            <label for="card_name">Name on Card:</label>
+            <input type="text" id="card_name" name="card_name" required>
+            <label for="card_number">Card Number:</label>
+            <input type="text" id="card_number" name="card_number" pattern="\d{16}" maxlength="16" placeholder="1234 5678 9012 3456" required>
+            <label for="expiry_date">Expiry Date:</label>
+            <input type="text" id="expiry_date" name="expiry_date" placeholder="MM/YY" required>
+            <label for="cvv">CVV:</label>
+            <input type="text" id="cvv" name="cvv" pattern="\d{3}" maxlength="3" required>
+        </fieldset>
+        <button type="submit">Submit Payment</button>
+    </form>
+</div>
+{% endif %}
+{% endblock %}

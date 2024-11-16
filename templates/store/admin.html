@@ -1,0 +1,70 @@
+{% extends 'store/base.html' %}
+
+{% block title %}Admin - E-Commerce Store{% endblock %}
+
+{% block content %}
+<div id="title-block">
+    <h1>Welcome to the Admin Dashboard!</h1>
+</div>
+    
+<div id="admin-list">
+    <h2>Authorized Admins</h2>
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>username</td>
+            <td>email</td>
+        </tr>
+        {% for user in user_table %}
+        {% if user.is_superuser %}
+        <tr>
+            <td>{{ user.first_name }} {{ user.last_name }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+</div>
+</div>
+<div id="item-update">
+    <h2>Product List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Seller</th>
+                <th>Approved</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in storestock %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.stock_quantity }}</td>
+                    <td>${{ item.price }}</td>
+                    <td>{{ item.seller }}</td>
+                    <td>{{ item.is_approved|yesno:"Yes,No" }}</td>
+                    <td>
+                        {% if not item.is_approved %}
+                            <form method="post" action="{% url 'approve_product' item.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit">Approve</button>
+                            </form>
+                            <form method="post" action="{% url 'reject_product' item.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit">Reject</button>
+                            </form>
+                        {% else %}
+                            Approved
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

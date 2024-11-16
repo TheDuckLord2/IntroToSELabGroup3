@@ -1,0 +1,67 @@
+{% extends 'store/base.html' %}
+
+{% block title %}Management - E-Commerce Store{% endblock %}
+
+{% block content %}
+<div id="title-block">
+    <h1>Welcome to the Management Dashboard!</h1>
+</div>
+
+<div id="item-update">
+    <h2>Product List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in storestock %}
+                <tr>
+                    <td>
+                        {% if item.image %}
+                            <img src="{{ item.image.url }}" alt="{{ item.name }}" style="width: 100px; height: auto;">
+                        {% else %}
+                            No Image
+                        {% endif %}
+                    </td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.stock_quantity }}</td>
+                    <td>${{ item.price }}</td>
+                    <td>
+                        <a href="{% url 'update_storestock' item.id %}">Update</a> |
+                        <a href="{% url 'remove_from_storestock' item.id %}">Remove</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div id="new-item">
+    <h2>Add New Item to Stock</h2>
+    <form method="post" action="{% url 'new_product' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="productname">Product Name:</label><br>
+        <input type="text" id="productname" name="productname" required><br>
+
+        <label for="productquantity">Quantity:</label><br>
+        <input type="number" id="productquantity" name="productquantity" required><br>
+
+        <label for="productprice">Price:</label><br>
+        <input type="number" step="0.01" id="productprice" name="productprice" required><br>
+
+        <label for="productdesc">Description:</label><br>
+        <textarea id="productdesc" name="productdesc" rows="5" required></textarea><br><br>
+
+        <label for="productimage">Product Image:</label><br>
+        <input type="file" id="productimage" name="productimage" accept="image/*" required><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</div>
+{% endblock %}
