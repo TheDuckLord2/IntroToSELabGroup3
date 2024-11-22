@@ -74,5 +74,12 @@
             <a href="{% url 'manage' %}">Manage Products</a>
         {% endif %}
     </section>
+
+    <div id="delete-account-section">
+        <h3>Delete Account</h3>
+        <p>If you delete your account, all your data will be permanently removed.</p>
+        <a href="{% url 'delete_account' %}" class="btn btn-danger">Delete My Account</a>
+    </div>
+
 </div>
 {% endblock %}

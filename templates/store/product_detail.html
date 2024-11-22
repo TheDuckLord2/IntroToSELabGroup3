@@ -15,11 +15,14 @@
         <p><strong>Stock Quantity:</strong> {{ product.stock_quantity }}</p>
         <p><strong>Seller:</strong> {{ product.seller.username }}</p>
 
+        {% if product.stock_quantity > 0 %}
         <form method="POST" action="{% url 'add_to_cart' product.id %}">
             {% csrf_token %}
             <button type="submit" class="btn">Add to Cart</button>
         </form>
-
+        {% else %}
+        <p class="out-of-stock" style="color: red; font-weight: bold;">Out of Stock</p>
+        {% endif %}
     </div>
 </main>
 {% endblock %}

@@ -2,14 +2,14 @@
 
 from django.http import JsonResponse,  HttpResponseBadRequest
 from django.views import View
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.contrib.auth import authenticate, login, get_user_model, logout
 from django.contrib import messages
 from rest_framework import viewsets
 from rest_framework.response import Response
 from api.serializers import CartSerializer, OrderSerializer
 from api.models import User, StoreStock, Cart, Order, OrderDetails,  CartItem
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q, F
 from django.urls import reverse
 from django.db import transaction
@@ -46,6 +46,8 @@ def getabout(request):
 def getadmin(request):
     return render(request, "store/admin.html")
 
+def admin_required(user):
+    return user.is_superuser
 
 def getproduct(request):
     return render(request, "store/products.html")
@@ -244,7 +246,7 @@ class RegisterView(View):
                 'error_message': "Username already exists. Please choose another one."
             })
 
-        is_staff = True if account_type == 'Seller' else False
+        is_staff = True if account_type == 'Seller' or account_type == 'seller' else False
 
         try:
             user = get_user_model().objects.create_user(
@@ -406,16 +408,40 @@ class CartView(viewsets.ViewSet):
 
 def products_view(request):
     query = request.GET.get('q', '')
+    sort = request.GET.get('sort', 'name')
+    order = request.GET.get('order', 'asc')
     products = StoreStock.objects.filter(is_approved=True)
 
     if query:
         products = products.filter(Q(name__icontains=query))
+
+    sort_field = F(sort)
+    if order == 'desc':
+        sort_field = sort_field.desc()
+
+    try:
+        products = products.order_by(sort_field)
+    except Exception as e:
+        products = products.order_by('name')
 
     return render(request, 'store/products.html', {'products': products, 'query': query})
 
 def product_detail_view(request, product_id):
     product = get_object_or_404(StoreStock, id=product_id)
     return render(request, 'store/product_detail.html', {'product': product})
+
+def compare_products_view(request):
+    product_ids = request.GET.getlist('compare')
+
+    if len(product_ids) != 2:
+        messages.error(request, "Select 2 products to compare.")
+
+        return redirect('product')
+
+
+    products = get_list_or_404(StoreStock, id__in=product_ids)
+
+    return render(request, 'store/compare.html', {'products': products})
 
 
 def getmanage(request):
@@ -476,7 +502,7 @@ def remove_from_storestock(request, item_id):
 
 @login_required
 def manage_products_view(request):
-    if request.user.account_type == 'Seller':
+    if request.user.account_type == 'Seller' or request.user.account_type == 'Admin':
         storestock = StoreStock.objects.filter(seller=request.user)
     else:
         storestock = []
@@ -499,7 +525,7 @@ def reject_product(request, item_id):
         messages.success(request, "Product rejected!")
     return redirect('admin')
 
-
+@user_passes_test(admin_required, login_url='home')
 def admin_dashboard(request):
     storestock = StoreStock.objects.all()
     user_table = User.objects.filter(is_superuser=True)
@@ -621,3 +647,12 @@ def order_detail(request, order_id):
         'order': order,
         'order_details': order_details,
     })
+
+@login_required
+def delete_account(request):
+    if request.method == 'POST':
+        request.user.delete()
+        messages.success(request, "Account deleted successfully.")
+        return redirect('home')
+
+    return render(request, 'store/delete_account.html')

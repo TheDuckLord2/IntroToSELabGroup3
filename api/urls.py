@@ -43,5 +43,7 @@ urlpatterns = [
     path('profile/', views.user_profile, name='user_profile'),
     path('profile/update/', views.update_profile, name='update_profile'),
     path('order/<int:order_id>/', views.order_detail, name='order_detail'),
+    path('compare/', views.compare_products_view, name='compare_products'),
+    path('delete_account/', views.delete_account, name='delete_account'),
 
 ]
