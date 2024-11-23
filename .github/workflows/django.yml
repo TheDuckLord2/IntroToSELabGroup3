@@ -55,4 +55,4 @@ jobs:
     - name: Run Tests
       env:
         DATABASE_URL: mysql://test_user:test_password@127.0.0.1:3306/test_db
-      run: python manage.py test 
+      run: python manage.py test --keepdb
