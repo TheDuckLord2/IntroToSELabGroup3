@@ -1,0 +1,58 @@
+{% extends "store/base.html" %}
+
+{% block title %}Compare Products{% endblock %}
+
+{% block content %}
+<div id="title-block">
+    <h1>Compare Products</h1>
+</div>
+    
+    
+{% if products %}
+    <table>
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>{{ products.0.name }}</th>
+                <th>{{ products.1.name }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Image</td>
+                <td>
+                    {% if products.0.image %}
+                        <img src="{{ products.0.image.url }}" alt="{{ products.0.name }}" style="max-width: 100px; height: auto;">
+                    {% else %}
+                        No Image
+                    {% endif %}
+                </td>
+                <td>
+                    {% if products.1.image %}
+                        <img src="{{ products.1.image.url }}" alt="{{ products.1.name }}" style="max-width: 100px; height: auto;">
+                    {% else %}
+                        No Image
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td>${{ products.0.price }}</td>
+                <td>${{ products.1.price }}</td>
+            </tr>
+            <tr>
+                <td>Stock</td>
+                <td>{{ products.0.stock_quantity }}</td>
+                <td>{{ products.1.stock_quantity }}</td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td>{{ products.0.description }}</td>
+                <td>{{ products.1.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% else %}
+    <p>No products available for comparison.</p>
+{% endif %}
+{% endblock %}

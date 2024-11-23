@@ -1,0 +1,79 @@
+{% extends "store/base.html" %}
+
+{% block title %}Products - E-Commerce Store{% endblock %}
+
+{% block content %}
+<div id="title-block">
+    <h1>Our Products</h1>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {{ message.tags }}" style="color: red;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<!-- Search and Sorting Section -->
+<div id="search-bar">
+    <form method="GET" action="{% url 'product' %}">
+        <label for="search">Search By Product Title:</label>
+        <input type="text" id="search" name="q" value="{{ query }}" required>
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+<div id="sorting-options">
+    <form method="GET" action="{% url 'product' %}" id="sorting-form">
+        <input type="hidden" name="q" value="{{ query }}">
+        <label for="sort">Sort By:</label>
+        <select name="sort" id="sort" onchange="document.getElementById('sorting-form').submit();">
+            <option value="name" {% if request.GET.sort == "name" %}selected{% endif %}>Name</option>
+            <option value="price" {% if request.GET.sort == "price" %}selected{% endif %}>Price</option>
+            <option value="stock_quantity" {% if request.GET.sort == "stock_quantity" %}selected{% endif %}>Stock</option>
+        </select>
+        <label for="order">Order:</label>
+        <select name="order" id="order" onchange="document.getElementById('sorting-form').submit();">
+            <option value="asc" {% if request.GET.order == "asc" %}selected{% endif %}>Ascending</option>
+            <option value="desc" {% if request.GET.order == "desc" %}selected{% endif %}>Descending</option>
+        </select>
+    </form>
+</div>
+
+<!-- Compare Form -->
+<form method="GET" action="{% url 'compare_products' %}">
+    <!-- Compare Button -->
+    <div id="compare-button-container">
+        <label for="compare">Compare:</label>
+        <button type="submit" class="btn" {% if products|length < 2 %}disabled{% endif %}>
+            Compare
+        </button>
+    </div>
+
+    <!-- Product Grid -->
+    <div id="product-grid">
+        {% if products %}
+            {% for product in products %}
+                <div class="product-card">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" style="max-width: 100%; height: auto;">
+                    {% else %}
+                        {% load static %}
+                        <img src="{% static 'product_images/placeholder.png' %}" alt="No Image Available" style="max-width: 100%; height: auto;">
+                    {% endif %}
+                    <h2>{{ product.name }}</h2>
+                    <p>{{ product.description|truncatewords:20 }}</p>
+                    <p><strong>Price:</strong> ${{ product.price }}</p>
+                    <!-- Checkbox for comparison -->
+                    <input type="checkbox" name="compare" value="{{ product.id }}"> Compare
+                    <p></p>
+                    <a href="{% url 'product_detail' product.id %}" class="btn">View Details</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No products available at the moment.</p>
+        {% endif %}
+    </div>
+</form>
+{% endblock %}

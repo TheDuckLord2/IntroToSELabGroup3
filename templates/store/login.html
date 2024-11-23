@@ -1,0 +1,34 @@
+{% extends 'store/base.html' %}
+
+{% block title %} Login - e-Commerce Store{% endblock %}
+
+{% block content %}
+<div id="title-block">
+    <h1>{{ human_readable_type }} Login</h1>
+</div>
+<div id="login-container">
+    <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
+        
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+
+        <input type="hidden" name="account_type" value="{{ account_type }}">
+
+        <button type="submit">Login</button>
+    </form>
+    
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+    
+    <p>Don't have an account? <a href="{% url 'register' %}">Sign Up</a></p>
+</div>
+{% endblock %}

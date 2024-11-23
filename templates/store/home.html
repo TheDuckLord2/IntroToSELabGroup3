@@ -1,0 +1,49 @@
+{% extends 'store/base.html' %}
+
+{% block title %}Home - E-Commerce Store{% endblock %}
+
+{% block content %}
+<div id="title-block">
+    <h1>Welcome to Our E-Commerce Store!</h1>
+</div>
+
+<div id="welcome-page">
+    <p>This is a website made as a project for Intro to SE Lab.</p>
+</div>
+
+<div id="home-cart">
+    {% if user.is_authenticated %}
+        <p>Your current cart:</p>
+        {% if cart %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart %}
+                        <tr>
+                            <td>{{ item.product.name }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>${{ item.product.price }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Your cart is empty.</p>
+        {% endif %}
+    {% else %}
+        <h2>Log in or sign up to save a cart!</h2>
+        <div id="auth-buttons">
+            <a href="{% url 'login' %}?account_type=buyer" class="btn">Buyer Login</a>
+            <a href="{% url 'login' %}?account_type=seller" class="btn">Seller Login</a>
+            <a href="{% url 'login' %}?account_type=admin" class="btn">Admin Login</a>
+            <a href="{% url 'register' %}" class="btn">Sign Up</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
