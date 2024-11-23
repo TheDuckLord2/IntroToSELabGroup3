@@ -1,0 +1,58 @@
+name: Django CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: test_db
+          MYSQL_USER: test_user
+          MYSQL_PASSWORD: test_password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.12
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Grant MySQL User Privileges
+      run: |
+        mysql -h 127.0.0.1 -u root -proot -e "
+        CREATE DATABASE IF NOT EXISTS test_db;
+        GRANT ALL PRIVILEGES ON test_db.* TO 'test_user'@'%';
+        FLUSH PRIVILEGES;"
+
+    - name: Configure Django for Testing
+      run: |
+        cp IntroToSELabGroup3/setting_ci.py IntroToSELabGroup3/settings.py
+        python manage.py migrate
+        python manage.py collectstatic --no-input
+
+    - name: Run Tests
+      env:
+        DATABASE_URL: mysql://test_user:test_password@127.0.0.1:3306/test_db
+      run: python manage.py test --keepdb
